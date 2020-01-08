@@ -1,5 +1,7 @@
 # Changelog
 ## Changelog
+### V2.9.4
+- Added GNU General Public License v3.0 
 ### v2.9.3
 - updated magisk module template
 - updated binary & configuration files to upstream version 2.0.36
