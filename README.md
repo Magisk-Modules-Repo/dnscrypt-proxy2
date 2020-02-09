@@ -64,6 +64,6 @@ DNS66 or dnsfilter app (both apps available in F-Droid repo) can also  be used i
 - [bluemeda & all other contributors for the magisk module](https://github.com/Magisk-Modules-Repo/dnscrypt-proxy2/graphs/contributors)
 - [hineH](https://github.com/hineH) for the forwarding rules solution in [issue #5](https://github.com/Magisk-Modules-Repo/dnscrypt-proxy2/issues/5)
 ## dnscrypt-proxy for android are also developed & available at:
-- https://git.nixnet.xyz/quindecim/dnscrypt-proxy-android with support at https://t.me/qd_invitation
+- https://git.nixnet.xyz/quindecim/dnscrypt-proxy-android with support at https://t.me/joinchat/Ee24KVJ2MRcf-lcZN8UA1w & https://t.me/dnscrypt_proxy
 - https://github.com/CHEF-KOCH/dnscrypt-proxy-android
 - https://github.com/adit/dnscrypt-proxy/
