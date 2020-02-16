@@ -13,28 +13,28 @@ A flexible DNS proxy, with support for modern encrypted DNS protocols such as [D
 
 ### Set DNS server manually with 3rd-party app (not included in this module)
 - DNS server address is 127.0.0.1:5354 for ipv4 and [::1]:5354 for ipv6
-- If you use AfWall, you can write this custom packet  redirection script where IP address 9.9.9.9 (can be 1.1.1.1 or 8.8.8.8 or any IP address of a reliable DNS server) should be same as the IP address of fallback_resolver & netprobe_address in configuration file dnscrypt-proxy.toml located at /data/media/0/dnscrypt-proxy. 
+- If you use AfWall, you can write this custom packet  redirection script where IP address 1.1.1.1 (can be 9.9.9.9 or 8.8.8.8 or any IP address of a reliable DNS server) should be same as the IP address of fallback_resolver & netprobe_address in configuration file dnscrypt-proxy.toml located at /data/media/0/dnscrypt-proxy. 
   ```
-  iptables -t nat -A OUTPUT -p tcp ! -d 9.9.9.9 --dport 53 -j DNAT --to-destination 127.0.0.1:5354
-  iptables -t nat -A OUTPUT -p udp ! -d 9.9.9.9 --dport 53 -j DNAT --to-destination 127.0.0.1:5354
+  iptables -t nat -A OUTPUT -p tcp ! -d 1.1.1.1 --dport 53 -j DNAT --to-destination 127.0.0.1:5354
+  iptables -t nat -A OUTPUT -p udp ! -d 1.1.1.1 --dport 53 -j DNAT --to-destination 127.0.0.1:5354
   ``` 
 
-~~ip6tables -t nat -A OUTPUT -p tcp ! -d 9.9.9.9 --dport 53 -j DNAT --to-destination [::1]:5354~~
+~~ip6tables -t nat -A OUTPUT -p tcp ! -d 1.1.1.1 --dport 53 -j DNAT --to-destination [::1]:5354~~
 
 
-~~ip6tables -t nat -A OUTPUT -p udp ! -d 9.9.9.9 --dport 53 -j DNAT --to-destination [::1]:5354~~
+~~ip6tables -t nat -A OUTPUT -p udp ! -d 1.1.1.1 --dport 53 -j DNAT --to-destination [::1]:5354~~
 
 
 and this shutdown script
   ```
-  iptables -t nat -D OUTPUT -p tcp ! -d 9.9.9.9 --dport 53 -j DNAT --to-destination 127.0.0.1:5354
-  iptables -t nat -D OUTPUT -p udp ! -d 9.9.9.9 --dport 53 -j DNAT --to-destination 127.0.0.1:5354
+  iptables -t nat -D OUTPUT -p tcp ! -d 1.1.1.1 --dport 53 -j DNAT --to-destination 127.0.0.1:5354
+  iptables -t nat -D OUTPUT -p udp ! -d 1.1.1.1 --dport 53 -j DNAT --to-destination 127.0.0.1:5354
   ```
  
-~~ip6tables -t nat -D OUTPUT -p tcp ! -d 9.9.9.9 --dport 53 -j DNAT --to-destination [::1]:5354~~
+~~ip6tables -t nat -D OUTPUT -p tcp ! -d 1.1.1.1 --dport 53 -j DNAT --to-destination [::1]:5354~~
 
 
-~~ip6tables -t nat -D OUTPUT -p udp ! -d 9.9.9.9 --dport 53 -j DNAT --to-destination [::1]:5354~~
+~~ip6tables -t nat -D OUTPUT -p udp ! -d 1.1.1.1 --dport 53 -j DNAT --to-destination [::1]:5354~~
 
 
 Refer AFWall [Docs](https://github.com/ukanth/afwall/wiki), [FAQs](https://github.com/ukanth/afwall/wiki/FAQ) and [custom scripts](https://github.com/ukanth/afwall/wiki/CustomScripts). 
@@ -59,11 +59,16 @@ DNS66 or dnsfilter app (both apps available in F-Droid repo) can also  be used i
 - [https://www.dnsleaktest.com/](https://www.dnsleaktest.com/)
 ## Changelog
 - [Full changelog](https://github.com/Magisk-Modules-Repo/dnscrypt-proxy2/blob/master/changelog.md)
+## License
+- DNSCrypt-proxy binaries from [jedisct1](https://github.com/jedisct1/dnscrypt-proxy)
+ is governed by ISC license.
+- All of the magisk-modules, excluding the DNSCrypt-proxy binaries, is governed by GNU-GPL-v3.0 license.
 ## Credits
+- [topjohnwu](https://github.com/topjohnwu) for the magisk & [magisk-modules-repo](https://github.com/Magisk-Modules-Repo)
 - DNSCrypt-Proxy2 upstream | [jedisct1](https://github.com/jedisct1/dnscrypt-proxy)
 - [bluemeda & all other contributors for the magisk module](https://github.com/Magisk-Modules-Repo/dnscrypt-proxy2/graphs/contributors)
 - [hineH](https://github.com/hineH) for the solution in [issue #5](https://github.com/Magisk-Modules-Repo/dnscrypt-proxy2/issues/5)
-## dnscrypt-proxy for android are also developed by & available at:
+## DNSCrypt-proxy for android is also developed by & available at:
 - [quindecim](https://git.nixnet.xyz/quindecim/dnscrypt-proxy-android) with support in [Telegram group](https://t.me/joinchat/Ee24KVJ2MRcf-lcZN8UA1w) & [Telegram channel](https://t.me/dnscrypt_proxy)
 - [CHEF-KOCH](https://github.com/CHEF-KOCH/dnscrypt-proxy-android)
 - [adit](https://github.com/adit/dnscrypt-proxy/)
