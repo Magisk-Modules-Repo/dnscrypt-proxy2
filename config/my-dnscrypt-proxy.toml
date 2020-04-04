@@ -1,4 +1,4 @@
-# Version 2.0.39 linux-x86_64
+# Version 2.0.42 linux-x86_64
 
 ##############################################
 #                                            #
@@ -22,10 +22,12 @@
 ## Servers from the "public-resolvers" source (see down below) can
 ## be viewed here: https://dnscrypt.info/public-servers
 ##
-## If this line is commented, all registered servers matching the require_* filters
-## will be used.
+## The proxy will automatically pick working servers from this list.
+## Note that the require_* filters do NOT apply when using this setting.
 ##
-## The proxy will automatically pick the fastest, working servers from the list.
+## By default, this list is empty and all registered servers matching the
+## require_* filters will be used instead.
+##
 ## Remove the leading # first to enable this; lines starting with # are ignored.
 
 # server_names = ['scaleway-fr', 'google', 'yandex', 'cloudflare']
@@ -43,7 +45,7 @@
 
 ## Maximum number of simultaneous client connections to accept
 
-max_clients = 250
+max_clients = 50
 
 
 ## Switch to a different system user after listening sockets have been created.
@@ -82,8 +84,9 @@ require_nolog = true
 require_nofilter = true
 
 # Server names to avoid even if they match all criteria
-disabled_server_names = ['ffmuc.net','geekdns-hk','suami','charis','opennic-ethservices','2.dnscrypt-cert.233py.com', '2.dnscrypt-cert.opennic2.eth-services.de', '2.dnscrypt-cert.dnscrypt.uk', 'ams-dnscrypt-nl']
+# disabled_server_names = ['ffmuc.net','geekdns-hk','suami','charis','opennic-ethservices','2.dnscrypt-cert.233py.com', '2.dnscrypt-cert.opennic2.eth-services.de', '2.dnscrypt-cert.dnscrypt.uk', 'ams-dnscrypt-nl']
 
+ disabled_server_names = ['sth-dnscrypt-se','ffmuc.net', 'ams-dnscrypt-nl' ]
 
 ## Always use TCP to connect to upstream servers.
 ## This can be useful if you need to route everything through Tor.
@@ -151,7 +154,6 @@ keepalive = 30
 ## Use the system logger (syslog on Unix, Event Log on Windows)
 
 # use_syslog = true
- use_syslog = false
 
 
 ## Delay, in minutes, after which certificates are reloaded
@@ -201,22 +203,23 @@ cert_refresh_delay = 240
 ## They will never be used if lists have already been cached, and if stamps
 ## don't include host names without IP addresses.
 ## They will not be used if the configured system DNS works.
-## Resolver supporting DNSSEC are recommended.
+## Resolvers supporting DNSSEC are recommended.
 ##
 ## People in China may need to use 114.114.114.114:53 here.
 ## Other popular options include 8.8.8.8 and 1.1.1.1.
 ##
-## If more than one resolver are specified, they will be tried in sequence.
+## If more than one resolver is specified, they will be tried in sequence.
 
-fallback_resolvers = ['1.1.1.1:53', '9.9.9.9:53', '8.8.8.8:53']
+fallback_resolvers = ['9.9.9.9:53','1.1.1.1:53' '8.8.8.8:53']
 
-#  fallback_resolver = '9.9.9.9:53'
+#fallback_resolvers = ['1.1.1.1:53', '9.9.9.9:53', '8.8.8.8:53']
+
+# fallback_resolver = '9.9.9.9:53'
 # fallback_resolver = '1.1.1.1:53'
 # fallback_resolver = '8.8.8.8:53'
 
 
 ## Always use the fallback resolver before the system DNS settings.
-
 
 ignore_system_dns = true
 
@@ -240,7 +243,8 @@ ignore_system_dns = true
 ## On other operating systems, the connection will be initialized
 ## but nothing will be sent at all.
 
-netprobe_address = '1.1.1.1:53'
+# netprobe_address = '1.1.1.1:53'
+ netprobe_address = '9.9.9.9:53'
 
 
 ## Offline mode - Do not use any remote encrypted servers.
@@ -254,13 +258,15 @@ netprobe_address = '1.1.1.1:53'
 ## These strings will be added as TXT records to queries.
 ## Do not use, except on servers explicitly asking for extra data
 ## to be present.
+## encrypted-dns-server can be configured to use this for access control
+## in the [access_control] section
 
-# query_meta = ["key1:value1", "key2:value2", "key3:value3"]
+# query_meta = ["key1:value1", "key2:value2", "token:MySecretToken"]
 
 
 ## Automatic log files rotation
 
-# Maximum log files size in MB
+# Maximum log files size in MB - Set to 0 for unlimited.
 log_files_max_size = 1
 
 # How long to keep backup files, in days
@@ -278,7 +284,7 @@ log_files_max_backups = 10
 ## Note: if you are using dnsmasq, disable the `dnssec` option in dnsmasq if you
 ## configure dnscrypt-proxy to do any kind of filtering (including the filters
 ## below and blacklists).
-## But you can still choose resolvers that do DNSSEC validation.
+## You can still choose resolvers that do DNSSEC validation.
 
 
 ## Immediately respond to IPv6-related queries with an empty response
@@ -310,9 +316,7 @@ reject_ttl = 600
 #        Route queries for specific domains to a dedicated set of servers        #
 ##################################################################################
 
-## Example map entries (one entry per line):
-## example.com 9.9.9.9
-## example.net 9.9.9.9,8.8.8.8,1.1.1.1
+## See the `example-forwarding-rules.txt` file for an example
 
 # forwarding_rules = 'forwarding-rules.txt'
 
@@ -326,9 +330,7 @@ reject_ttl = 600
 ## In addition to acting as a HOSTS file, it can also return the IP address
 ## of a different name. It will also do CNAME flattening.
 ##
-## Example map entries (one entry per line)
-## example.com     10.1.1.1
-## www.google.com  forcesafesearch.google.com
+## See the `example-cloaking-rules.txt` file for an example
 
 # cloaking_rules = 'cloaking-rules.txt'
 
@@ -348,7 +350,7 @@ cache = true
 
 ## Cache size
 
-cache_size = 1024
+cache_size = 4096
 
 
 ## Minimum TTL for cached entries
@@ -412,7 +414,7 @@ cache_neg_max_ttl = 600
 [query_log]
 
   ## Path to the query log file (absolute, or relative to the same directory as the config file)
-  ## Non non-Windows systems, can be /dev/stdout to log to the standard output (and set log_files_max_size to 0)
+  ## On non-Windows systems, can be /dev/stdout to log to the standard output (also set log_files_max_size to 0)
 
    file = '/data/media/0/dnscrypt-proxy/query.log'
 
@@ -499,7 +501,7 @@ cache_neg_max_ttl = 600
 
 [ip_blacklist]
 
-  ## Path to the file of blocking rules (absolute, or relative to the same directory as the executable file)
+  ## Path to the file of blocking rules (absolute, or relative to the same directory as the config file)
 
   # blacklist_file = 'ip-blacklist.txt'
 
@@ -553,8 +555,7 @@ cache_neg_max_ttl = 600
 ##
 ## For example, the following rule in a blacklist file:
 ## *.youtube.* @time-to-sleep
-## would block access to YouTube only during the days, and period of the days
-## define by the 'time-to-sleep' schedule.
+## would block access to YouTube during the times defined by the 'time-to-sleep' schedule.
 ##
 ## {after='21:00', before= '7:00'} matches 0:00-7:00 and 21:00-0:00
 ## {after= '9:00', before='18:00'} matches 9:00-18:00
@@ -595,7 +596,7 @@ cache_neg_max_ttl = 600
 ## must include the prefixes.
 ##
 ## If the `urls` property is missing, cache files and valid signatures
-## must be already present; This doesn't prevent these cache files from
+## must already be present. This doesn't prevent these cache files from
 ## expiring after `refresh_delay` hours.
 
 [sources]
@@ -606,7 +607,7 @@ cache_neg_max_ttl = 600
   urls = ['https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v2/public-resolvers.md', 'https://download.dnscrypt.info/resolvers-list/v2/public-resolvers.md']
   cache_file = '/data/media/0/dnscrypt-proxy/public-resolvers.md'
   minisign_key = 'RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3'
-  refresh_delay = 72
+  refresh_delay = 12
   prefix = ''
 
   ## Anonymized DNS relays
@@ -615,7 +616,7 @@ cache_neg_max_ttl = 600
   urls = ['https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v2/relays.md', 'https://download.dnscrypt.info/resolvers-list/v2/relays.md']
   cache_file = '/data/media/0/dnscrypt-proxy/relays.md'
   minisign_key = 'RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3'
-  refresh_delay = 72
+  refresh_delay = 12
   prefix = ''
 
   ## Quad9 over DNSCrypt - https://quad9.net/
@@ -645,12 +646,31 @@ cache_neg_max_ttl = 600
 
 # Cisco servers currently cannot handle queries larger than 1472 bytes, and don't
 # truncate reponses larger than questions as expected by the DNSCrypt protocol.
-# This prevents large responses from being received, and breaks relaying.
-# A workaround for the first issue will be applied to servers in list below.
-# Do not change that list until the bugs are fixed server-side.
+# This prevents large responses from being received over UDP and over relays.
+#
+# The `dnsdist` server software drops client queries larger than 1500 bytes.
+# They are aware of it and are working on a fix.
+#
+# The list below enables workarounds to make non-relayed usage more reliable
+# until the servers are fixed.
 
-broken_query_padding = ['cisco', 'cisco-ipv6', 'cisco-familyshield']
+fragments_blocked = ['cisco', 'cisco-ipv6', 'cisco-familyshield', 'cisco-familyshield-ipv6', 'quad9-dnscrypt-ip4-filter-alt', 'quad9-dnscrypt-ip4-filter-pri', 'quad9-dnscrypt-ip4-nofilter-alt', 'quad9-dnscrypt-ip4-nofilter-pri', 'quad9-dnscrypt-ip6-filter-alt', 'quad9-dnscrypt-ip6-filter-pri', 'quad9-dnscrypt-ip6-nofilter-alt', 'quad9-dnscrypt-ip6-nofilter-pri', 'cleanbrowsing-adult', 'cleanbrowsing-family-ipv6', 'cleanbrowsing-family', 'cleanbrowsing-security']
 
+
+
+
+################################
+#   TLS Client Authentication  #
+################################
+
+# This is only useful if you are operating your own, private DoH server(s).
+# (for DNSCrypt, see the `query_meta` feature instead)
+
+[tls_client_auth]
+
+# creds = [
+#    { server_name='myserver', client_cert='client.crt', client_key='client.key' }
+# ]
 
 
 
@@ -674,29 +694,29 @@ broken_query_padding = ['cisco', 'cisco-ipv6', 'cisco-familyshield']
 ##
 ## !!! THESE ARE JUST EXAMPLES !!!
 ##
-## Review the list of available relays from the "relays.md` file, and, for each
+## Review the list of available relays from the "relays.md" file, and, for each
 ## server you want to use, define the relays you want connections to go through.
 ##
-## Carefully choose relays and servers so that the are run by different entities.
+## Carefully choose relays and servers so that they are run by different entities.
 ##
 ## "server_name" can also be set to "*" to define a default route, but this is not
-## recommended. if you do so, keep "server_names" short and distinct from relays.
+## recommended. If you do so, keep "server_names" short and distinct from relays.
 
 # routes = [
 #    { server_name='example-server-1', via=['anon-example-1', 'anon-example-2'] },
 #    { server_name='example-server-2', via=['sdns://gRIxMzcuNzQuMjIzLjIzNDo0NDM'] }
 # ]
-#  routes = [
+# routes = [
 #    { server_name='mrkaran', via=['anon-publicarray', 'anon-cs-ca', 'anon-ev-to', 'anon-cs-ca2', 'anon-ev-va', 'anon-cs-dk', 'anon-cs-fi', 'anon-kama', 'anon-scaleway', 'anon-cs-fr', 'anon-cs-fr2', 'anon-cs-de', 'anon-cs-de2', 'anon-dnscrypt.one', 'anon-dnscrypt.one-ipv6', 'anon-cs-it', 'anon-cs-lv', 'anon-cs-md', 'anon-cs-ams', 'anon-scaleway-ams', 'anon-scaleway-ams-ipv6', 'anon-cs-nl', 'anon-cs-nl2', 'anon-cs-po', 'anon-cs-pt', 'anon-cs-ro', 'anon-tiarap', 'anon-tiarap-ipv6', 'anon-cs-sk', 'anon-cs-se', 'anon-ibksturm', 'anon-cs-ch', 'anon-dnscrypt.uk-ipv4', 'anon-dnscrypt.uk-ipv6', 'anon-v.dnscrypt.uk-ipv4', 'anon-v.dnscrypt.uk-ipv6', 'anon-cs-uk', 'anon-inconnu', 'anon-cs-usga', 'anon-cs-usnc', 'anon-cs-usil', 'anon-cs-ustx', 'anon-cs-usnv', 'anon-cs-usca', 'anon-cs-usor', 'anon-am-us', 'anon-cs-uswa', 'anon-cs-usdc'] },
-
-# { server_name='arvind-io', via=['anon-publicarray', 'anon-cs-ca', 'anon-ev-to', 'anon-cs-ca2', 'anon-ev-va', 'anon-cs-dk', 'anon-cs-fi', 'anon-kama', 'anon-scaleway', 'anon-cs-fr', 'anon-cs-fr2', 'anon-cs-de', 'anon-cs-de2', 'anon-dnscrypt.one', 'anon-dnscrypt.one-ipv6', 'anon-cs-it', 'anon-cs-lv', 'anon-cs-md', 'anon-cs-ams', 'anon-scaleway-ams', 'anon-scaleway-ams-ipv6', 'anon-cs-nl', 'anon-cs-nl2', 'anon-cs-po', 'anon-cs-pt', 'anon-cs-ro', 'anon-tiarap', 'anon-tiarap-ipv6', 'anon-cs-sk', 'anon-cs-se', 'anon-ibksturm', 'anon-cs-ch', 'anon-dnscrypt.uk-ipv4', 'anon-dnscrypt.uk-ipv6', 'anon-v.dnscrypt.uk-ipv4', 'anon-v.dnscrypt.uk-ipv6', 'anon-cs-uk', 'anon-inconnu', 'anon-cs-usga', 'anon-cs-usnc', 'anon-cs-usil', 'anon-cs-ustx', 'anon-cs-usnv', 'anon-cs-usca', 'anon-cs-usor', 'anon-am-us', 'anon-cs-uswa', 'anon-cs-usdc'] },
-
-# { server_name='captnemo-in', via=['anon-publicarray', 'anon-cs-ca', 'anon-ev-to', 'anon-cs-ca2', 'anon-ev-va', 'anon-cs-dk', 'anon-cs-fi', 'anon-kama', 'anon-scaleway', 'anon-cs-fr', 'anon-cs-fr2', 'anon-cs-de', 'anon-cs-de2', 'anon-dnscrypt.one', 'anon-dnscrypt.one-ipv6', 'anon-cs-it', 'anon-cs-lv', 'anon-cs-md', 'anon-cs-ams', 'anon-scaleway-ams', 'anon-scaleway-ams-ipv6', 'anon-cs-nl', 'anon-cs-nl2', 'anon-cs-po', 'anon-cs-pt', 'anon-cs-ro', 'anon-tiarap', 'anon-tiarap-ipv6', 'anon-cs-sk', 'anon-cs-se', 'anon-ibksturm', 'anon-cs-ch', 'anon-dnscrypt.uk-ipv4', 'anon-dnscrypt.uk-ipv6', 'anon-v.dnscrypt.uk-ipv4', 'anon-v.dnscrypt.uk-ipv6', 'anon-cs-uk', 'anon-inconnu', 'anon-cs-usga', 'anon-cs-usnc', 'anon-cs-usil', 'anon-cs-ustx', 'anon-cs-usnv', 'anon-cs-usca', 'anon-cs-usor', 'anon-am-us', 'anon-cs-uswa', 'anon-cs-usdc'] },
-
-   
-# { server_name='*', via=['anon-publicarray', 'anon-cs-ca', 'anon-ev-to', 'anon-cs-ca2', 'anon-ev-va', 'anon-cs-dk', 'anon-cs-fi', 'anon-kama', 'anon-scaleway', 'anon-cs-fr', 'anon-cs-fr2', 'anon-cs-de', 'anon-cs-de2', 'anon-dnscrypt.one', 'anon-dnscrypt.one-ipv6', 'anon-cs-it', 'anon-cs-lv', 'anon-cs-md', 'anon-cs-ams', 'anon-scaleway-ams', 'anon-scaleway-ams-ipv6', 'anon-cs-nl', 'anon-cs-nl2', 'anon-cs-po', 'anon-cs-pt', 'anon-cs-ro', 'anon-tiarap', 'anon-tiarap-ipv6', 'anon-cs-sk', 'anon-cs-se', 'anon-ibksturm', 'anon-cs-ch', 'anon-dnscrypt.uk-ipv4', 'anon-dnscrypt.uk-ipv6', 'anon-v.dnscrypt.uk-ipv4', 'anon-v.dnscrypt.uk-ipv6', 'anon-cs-uk', 'anon-inconnu', 'anon-cs-usga', 'anon-cs-usnc', 'anon-cs-usil', 'anon-cs-ustx', 'anon-cs-usnv', 'anon-cs-usca', 'anon-cs-usor', 'anon-am-us', 'anon-cs-uswa', 'anon-cs-usdc'] }
-   
+#    { server_name='arvind-io', via=['anon-publicarray', 'anon-cs-ca', 'anon-ev-to', 'anon-cs-ca2', 'anon-ev-va', 'anon-cs-dk', 'anon-cs-fi', 'anon-kama', 'anon-scaleway', 'anon-cs-fr', 'anon-cs-fr2', 'anon-cs-de', 'anon-cs-de2', 'anon-dnscrypt.one', 'anon-dnscrypt.one-ipv6', 'anon-cs-it', 'anon-cs-lv', 'anon-cs-md', 'anon-cs-ams', 'anon-scaleway-ams', 'anon-scaleway-ams-ipv6', 'anon-cs-nl', 'anon-cs-nl2', 'anon-cs-po', 'anon-cs-pt', 'anon-cs-ro', 'anon-tiarap', 'anon-tiarap-ipv6', 'anon-cs-sk', 'anon-cs-se', 'anon-ibksturm', 'anon-cs-ch', 'anon-dnscrypt.uk-ipv4', 'anon-dnscrypt.uk-ipv6', 'anon-v.dnscrypt.uk-ipv4', 'anon-v.dnscrypt.uk-ipv6', 'anon-cs-uk', 'anon-inconnu', 'anon-cs-usga', 'anon-cs-usnc', 'anon-cs-usil', 'anon-cs-ustx', 'anon-cs-usnv', 'anon-cs-usca', 'anon-cs-usor', 'anon-am-us', 'anon-cs-uswa', 'anon-cs-usdc'] },
+#    { server_name='captnemo-in', via=['anon-publicarray', 'anon-cs-ca', 'anon-ev-to', 'anon-cs-ca2', 'anon-ev-va', 'anon-cs-dk', 'anon-cs-fi', 'anon-kama', 'anon-scaleway', 'anon-cs-fr', 'anon-cs-fr2', 'anon-cs-de', 'anon-cs-de2', 'anon-dnscrypt.one', 'anon-dnscrypt.one-ipv6', 'anon-cs-it', 'anon-cs-lv', 'anon-cs-md', 'anon-cs-ams', 'anon-scaleway-ams', 'anon-scaleway-ams-ipv6', 'anon-cs-nl', 'anon-cs-nl2', 'anon-cs-po', 'anon-cs-pt', 'anon-cs-ro', 'anon-tiarap', 'anon-tiarap-ipv6', 'anon-cs-sk', 'anon-cs-se', 'anon-ibksturm', 'anon-cs-ch', 'anon-dnscrypt.uk-ipv4', 'anon-dnscrypt.uk-ipv6', 'anon-v.dnscrypt.uk-ipv4', 'anon-v.dnscrypt.uk-ipv6', 'anon-cs-uk', 'anon-inconnu', 'anon-cs-usga', 'anon-cs-usnc', 'anon-cs-usil', 'anon-cs-ustx', 'anon-cs-usnv', 'anon-cs-usca', 'anon-cs-usor', 'anon-am-us', 'anon-cs-uswa', 'anon-cs-usdc'] },
+#    { server_name='*', via=['anon-publicarray', 'anon-cs-ca', 'anon-ev-to', 'anon-cs-ca2', 'anon-ev-va', 'anon-cs-dk', 'anon-cs-fi', 'anon-kama', 'anon-scaleway', 'anon-cs-fr', 'anon-cs-fr2', 'anon-cs-de', 'anon-cs-de2', 'anon-dnscrypt.one', 'anon-dnscrypt.one-ipv6', 'anon-cs-it', 'anon-cs-lv', 'anon-cs-md', 'anon-cs-ams', 'anon-scaleway-ams', 'anon-scaleway-ams-ipv6', 'anon-cs-nl', 'anon-cs-nl2', 'anon-cs-po', 'anon-cs-pt', 'anon-cs-ro', 'anon-tiarap', 'anon-tiarap-ipv6', 'anon-cs-sk', 'anon-cs-se', 'anon-ibksturm', 'anon-cs-ch', 'anon-dnscrypt.uk-ipv4', 'anon-dnscrypt.uk-ipv6', 'anon-v.dnscrypt.uk-ipv4', 'anon-v.dnscrypt.uk-ipv6', 'anon-cs-uk', 'anon-inconnu', 'anon-cs-usga', 'anon-cs-usnc', 'anon-cs-usil', 'anon-cs-ustx', 'anon-cs-usnv', 'anon-cs-usca', 'anon-cs-usor', 'anon-am-us', 'anon-cs-uswa', 'anon-cs-usdc'] }
 # ]
+
+# skip resolvers incompatible with anonymization instead of using them directly
+
+# skip_incompatible = true
+
 
 ## Optional, local, static list of additional servers
 ## Mostly useful for testing your own servers.
