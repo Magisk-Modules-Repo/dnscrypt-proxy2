@@ -1,12 +1,13 @@
 # Changelog
 ## Changelog
+### V2.9.5
+- updated binary & configuration files to upstream version 2.0.42
 ### V2.9.4
 - Added GNU General Public License v3.0 
 - updated binary & configuration files to upstream version 2.0.39
 ### v2.9.3
 - updated magisk module template
 - updated binary & configuration files to upstream version 2.0.36
-
 ### v2.9.2
 - updated binary & configuration files to upstream version 2.0.33
 ### v2.9.1
