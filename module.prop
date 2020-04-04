@@ -1,6 +1,6 @@
 id=dnscrypt-proxy2
 name=DNSCrypt-Proxy2
-version=v2.9.4
-versionCode=31
+version=v2.9.5
+versionCode=32
 author=bluemeda [original author]-revived by lindroidux
-description=A flexible DNS proxy, with support for modern encrypted DNS protocols such as DNSCrypt v2, DNS-over-HTTP/2 & Anonymized DNSCrypt. Using upstream version DNSCrypt-proxy 2.0.39
+description=A flexible DNS proxy, with support for modern encrypted DNS protocols such as DNSCrypt v2, DNS-over-HTTP/2 & Anonymized DNSCrypt. Using upstream version DNSCrypt-proxy 2.0.42
