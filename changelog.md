@@ -1,5 +1,7 @@
 # Changelog
 ## Changelog
+### V2.9.6
+- updated binary & configuration files to upstream version 2.0.44
 ### V2.9.5
 - updated binary & configuration files to upstream version 2.0.42
 ### V2.9.4
