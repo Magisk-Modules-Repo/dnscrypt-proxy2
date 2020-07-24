@@ -51,12 +51,7 @@ DNS66 or dnsfilter app (both apps available in F-Droid repo) can also  be used i
 - For more detailed configuration please refer to [upstream documentation](https://github.com/jedisct1/dnscrypt-proxy/wiki/Configuration)
 
 ## Testing
-- [http://dnssec.vs.uni-due.de/](http://dnssec.vs.uni-due.de/) 
-- [http://www.dnssec-or-not.com/](http://www.dnssec-or-not.com/) online test by VeriSign (no JavaScript required)
-- [http://en.conn.internet.nl/connection/](http://en.conn.internet.nl/connection/) online test by Dutch Internet Standards Platform
-- [http://www.dnssec-failed.org/](http://www.dnssec-failed.org/) webpage with bogus signature by Comcast (will not open at all if you are using DNSSEC)
-- [http://dnsleak.com/](http://dnsleak.com/)
-- [https://www.dnsleaktest.com/](https://www.dnsleaktest.com/)
+- [https://github.com/DNSCrypt/dnscrypt-proxy/wiki/Checking/](https://github.com/DNSCrypt/dnscrypt-proxy/wiki/Checking/) 
 ## Changelog
 - [Full changelog](https://github.com/Magisk-Modules-Repo/dnscrypt-proxy2/blob/master/changelog.md)
 ## License
