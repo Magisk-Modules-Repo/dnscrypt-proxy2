@@ -14,6 +14,7 @@ A flexible DNS proxy, with support for modern encrypted DNS protocols such as [D
 ### Set DNS server manually with 3rd-party app (not included in this module)
 - DNS server address is 127.0.0.1:5354 for ipv4 and [::1]:5354 for ipv6
 - If you use AFWall, you can write the custom startup and shutdown script where IP address 9.9.9.9 (can be 1.1.1.1 or 8.8.8.8 or any IP address of a reliable DNS server) should be same as the IP address of fallback_resolver & netprobe_address in configuration file dnscrypt-proxy.toml located at /data/media/0/dnscrypt-proxy. A script file is included in the configuration directory with name "afwall-start-stop.sh".
+  
   ```
 IP6TABLES=/system/bin/ip6tables
 IPTABLES=/system/bin/iptables
@@ -28,7 +29,11 @@ $IPTABLES -t nat -I OUTPUT -p udp ! -d 1.1.1.1 --dport 53 -j DNAT --to-destinati
 
 # restart dnscrypt-proxy 
   pkill dnscrypt-proxy
+  
   ``` 
+
+
+
 
 Refer AFWall [Docs](https://github.com/ukanth/afwall/wiki), [FAQs](https://github.com/ukanth/afwall/wiki/FAQ) and [custom scripts](https://github.com/ukanth/afwall/wiki/CustomScripts). 
 
