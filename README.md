@@ -37,7 +37,7 @@ $IPTABLES -t nat -I OUTPUT -p udp ! -d 1.1.1.1 --dport 53 -j DNAT --to-destinati
 
 Refer AFWall [Docs](https://github.com/ukanth/afwall/wiki), [FAQs](https://github.com/ukanth/afwall/wiki/FAQ) and [custom scripts](https://github.com/ukanth/afwall/wiki/CustomScripts). 
 
-A script file named dns-redirect.sh is included in the configuration directory. The file may be copied to /data/adb/service.d & its permission set to executable for auto-redirection of dns request (for those users not interested in using  AFWall or other apps).
+Another script file named dns-redirect.sh is also included in the configuration directory which may be copied to /data/adb/service.d & its permission set to executable for auto-redirection of dns request (for users not interested in using  AFWall or other apps).
 
 ## Configuration (post-installation)
 - Read & correct the configuration options, especially the IP address, which should be same in redirection script and fallback_resolver & netprobe_address of dnscrypt-proxy.toml. 
