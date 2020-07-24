@@ -15,7 +15,8 @@ A flexible DNS proxy, with support for modern encrypted DNS protocols such as [D
 - DNS server address is 127.0.0.1:5354 for ipv4 and [::1]:5354 for ipv6
 - If you use AFWall, you can write the custom startup and shutdown script where IP address 9.9.9.9 (can be 1.1.1.1 or 8.8.8.8 or any IP address of a reliable DNS server) should be same as the IP address of fallback_resolver & netprobe_address in configuration file dnscrypt-proxy.toml located at /data/media/0/dnscrypt-proxy. A script file is included in the configuration directory with name "afwall-start-stop.sh".
   
- ```IP6TABLES=/system/bin/ip6tables
+ ```
+ IP6TABLES=/system/bin/ip6tables
  IPTABLES=/system/bin/iptables
 
 # First two lines delete current DNS settings 
