@@ -13,36 +13,26 @@ A flexible DNS proxy, with support for modern encrypted DNS protocols such as [D
 
 ### Set DNS server manually with 3rd-party app (not included in this module)
 - DNS server address is 127.0.0.1:5354 for ipv4 and [::1]:5354 for ipv6
-- If you use AfWall, you can write this custom packet  redirection script where IP address 9.9.9.9 (can be 1.1.1.1 or 8.8.8.8 or any IP address of a reliable DNS server) should be same as the IP address of fallback_resolver & netprobe_address in configuration file dnscrypt-proxy.toml located at /data/media/0/dnscrypt-proxy. 
+- If you use AFWall, you can write the custom startup and shutdown script where IP address 9.9.9.9 (can be 1.1.1.1 or 8.8.8.8 or any IP address of a reliable DNS server) should be same as the IP address of fallback_resolver & netprobe_address in configuration file dnscrypt-proxy.toml located at /data/media/0/dnscrypt-proxy. A script file is included in the configuration directory with name "afwall-start-stop.sh".
   ```
-  iptables -t nat -A OUTPUT -p tcp ! -d 9.9.9.9 --dport 53 -j DNAT --to-destination 127.0.0.1:5354
-  iptables -t nat -A OUTPUT -p udp ! -d 9.9.9.9 --dport 53 -j DNAT --to-destination 127.0.0.1:5354
+IP6TABLES=/system/bin/ip6tables
+IPTABLES=/system/bin/iptables
+
+# First two lines delete current DNS settings 
+$IPTABLES -t nat -D OUTPUT -p tcp --dport 53 -j DNAT --to-destination 127.0.0.1:5354 || true 
+$IPTABLES -t nat -D OUTPUT -p udp --dport 53 -j DNAT --to-destination 127.0.0.1:5354 || true 
+
+# This two new lines set our new DNS running at 127.0.0.1 at port 5354 
+$IPTABLES -t nat -I OUTPUT -p tcp  ! -d 1.1.1.1 --dport 53 -j DNAT --to-destination 127.0.0.1:5354
+$IPTABLES -t nat -I OUTPUT -p udp ! -d 1.1.1.1 --dport 53 -j DNAT --to-destination 127.0.0.1:5354
+
+# restart dnscrypt-proxy 
+  pkill dnscrypt-proxy
   ``` 
-
-~~ip6tables -t nat -A OUTPUT -p tcp ! -d 9.9.9.9 --dport 53 -j DNAT --to-destination [::1]:5354~~
-
-
-~~ip6tables -t nat -A OUTPUT -p udp ! -d 9.9.9.9 --dport 53 -j DNAT --to-destination [::1]:5354~~
-
-
-and this shutdown script
-  ```
-  iptables -t nat -D OUTPUT -p tcp ! -d 9.9.9.9 --dport 53 -j DNAT --to-destination 127.0.0.1:5354
-  iptables -t nat -D OUTPUT -p udp ! -d 9.9.9.9 --dport 53 -j DNAT --to-destination 127.0.0.1:5354
-  ```
- 
-~~ip6tables -t nat -D OUTPUT -p tcp ! -d 9.9.9.9 --dport 53 -j DNAT --to-destination [::1]:5354~~
-
-
-~~ip6tables -t nat -D OUTPUT -p udp ! -d 9.9.9.9 --dport 53 -j DNAT --to-destination [::1]:5354~~
-
 
 Refer AFWall [Docs](https://github.com/ukanth/afwall/wiki), [FAQs](https://github.com/ukanth/afwall/wiki/FAQ) and [custom scripts](https://github.com/ukanth/afwall/wiki/CustomScripts). 
 
 A script file named dns-redirect.sh is included in the configuration directory. The file may be copied to /data/adb/service.d & its permission set to executable for auto-redirection of dns request (for those users not interested in using  AFWall or other apps).
-
-  
-DNS66 or dnsfilter app (both apps available in F-Droid repo) can also  be used instead of custom script in  AFWall. 
 
 ## Configuration (post-installation)
 - Read & correct the configuration options, especially the IP address, which should be same in redirection script and fallback_resolver & netprobe_address of dnscrypt-proxy.toml. 
