@@ -1,5 +1,4 @@
 # Changelog
-## Changelog
 - Replaced incorrect testing URLs with upstream testing URL and updated README.md
 ### V2.9.6
 - updated binary & configuration files to upstream version 2.0.44
