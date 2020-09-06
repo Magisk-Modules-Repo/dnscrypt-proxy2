@@ -15,7 +15,7 @@ IPTABLES=/system/bin/iptables
 $IPTABLES -t nat -D OUTPUT -p tcp !-d 1.1.1.1 --dport 53 -j DNAT --to-destination 127.0.0.1:5354
 $IPTABLES -t nat -D OUTPUT -p udp !-d 1.1.1.1 --dport 53 -j DNAT --to-destination 127.0.0.1:5354
 
-# This two new lines set our new DNS running at 127.0.0.1 at port 5354 
+# These two new lines sets DNS running at 127.0.0.1 on port 5354 
 $IPTABLES -t nat -A OUTPUT -p tcp !-d 1.1.1.1 --dport 53 -j DNAT --to-destination 127.0.0.1:5354
 $IPTABLES -t nat -A OUTPUT -p udp !-d 1.1.1.1 --dport 53 -j DNAT --to-destination 127.0.0.1:5354
 
