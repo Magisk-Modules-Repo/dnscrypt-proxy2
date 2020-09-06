@@ -54,7 +54,7 @@ The script file named dns-redirect.sh, included in the configuration directory, 
 - [topjohnwu](https://github.com/topjohnwu) for the magisk & [magisk-modules-repo](https://github.com/Magisk-Modules-Repo)
 - DNSCrypt-Proxy2 upstream | [jedisct1](https://github.com/jedisct1/dnscrypt-proxy)
 - [bluemeda & all other contributors for the magisk module](https://github.com/Magisk-Modules-Repo/dnscrypt-proxy2/graphs/contributors)
-- [mherrmann3](https://github.com/mherrmann3) for corrections in iptables rules.
+- [mherrmann3](https://github.com/mherrmann3) for corrections in iptables rules. Refers [issue#9](https://github.com/Magisk-Modules-Repo/dnscrypt-proxy2/issues/9)
 ## DNSCrypt-proxy for android is also developed by & available at:
 - [quindecim](https://git.nixnet.xyz/quindecim/dnscrypt-proxy-android) with support in [Telegram group](https://t.me/qd_invitations) & [Telegram channel](https://t.me/dnscrypt_proxy)
 - [CHEF-KOCH](https://github.com/CHEF-KOCH/dnscrypt-proxy-android)
