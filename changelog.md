@@ -1,7 +1,7 @@
 # Changelog
 ## Changelog
 ### V2.9.7
-- Replaced incorrect testing URLs and updated README.md
+- Removed wrong testing URLs and updated README.md
 - updated & corrected iptables rules in dns-redirect.sh. Refers [issue#9](https://github.com/Magisk-Modules-Repo/dnscrypt-proxy2/issues/9)
 ### V2.9.6
 - updated binary & configuration files to upstream version 2.0.44
