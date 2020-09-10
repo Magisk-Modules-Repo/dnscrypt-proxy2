@@ -9,7 +9,7 @@ A flexible DNS proxy, with support for modern encrypted DNS protocols such as [D
 - All binary files are downloaded from [https://github.com/jedisct1/dnscrypt-proxy/releases](https://github.com/jedisct1/dnscrypt-proxy/releases)
 
 ## Installation
-- Download ~~[.zip module](https://github.com/Magisk-Modules-Repo/dnscrypt-proxy2/releases)~~ / flash it in Magisk Manager App  and set the DNS server as follows. 
+- Download/install using Magisk Manager App  and set the DNS server as follows. 
 
 ### Set DNS server manually with 3rd-party app (not included in this module)
 - DNS server address is 127.0.0.1:5354 for ipv4 and [::1]:5354 for ipv6
