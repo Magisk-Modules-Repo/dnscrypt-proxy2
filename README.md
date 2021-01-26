@@ -1,4 +1,4 @@
-# The development on this repository has ceased. Please visit & update modules from other similar repositories mentioned at the bottom of this page.
+# The development on this repository has ceased due to probable breaking of Android's security model and adding further layers of trust where it is inappropriate by rooting (More details at [https://madaidans-insecurities.github.io/](https://madaidans-insecurities.github.io/android.html). Please visit & update modules from other repositories mentioned at the bottom of this page.
 
 # dnscrypt-proxy2 for Android [Revival] 
 ### [bluemeda's original magisk module - Revived](https://github.com/Magisk-Modules-Repo/dnscrypt-proxy/) 
