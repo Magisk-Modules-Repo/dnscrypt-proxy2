@@ -1,3 +1,5 @@
+# The development on this repository has ceased. Please visit & update modules from other similar repositories mentioned at the bottom of this page.
+
 # dnscrypt-proxy2 for Android [Revival] 
 ### [bluemeda's original magisk module - Revived](https://github.com/Magisk-Modules-Repo/dnscrypt-proxy/) 
 
