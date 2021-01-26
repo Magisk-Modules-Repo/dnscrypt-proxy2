@@ -1,4 +1,4 @@
-# The development on this repository has ceased due to probable breaking of Android's security model and adding further layers of trust where it is inappropriate by rooting (More details at [https://madaidans-insecurities.github.io//](https://madaidans-insecurities.github.io/android.html). 
+# The development on this repository has ceased due to probable breaking of Android's security model and adding further layers of trust where it is inappropriate by rooting (More details at [https://madaidans-insecurities.github.io/](https://madaidans-insecurities.github.io/android.html)). 
 
 # Please visit & update modules from other repositories mentioned at the bottom of this page.
 
